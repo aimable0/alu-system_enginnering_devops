@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
-# generating a ssh key with bites defined (-b) with a filename and name of passphrase (-N)
-sudo apt update && sudo apt install openssh-client
-mkdir -p ~/.ssh
-chmod 700 ~/.ssh
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/school -N "betty"
+
+# Define the key file name and passphrase
+KEY_FILE="$HOME/.ssh/school"
+PASSPHRASE="betty"
+
+# Create the .ssh directory if it doesn't exist
+mkdir -p "$HOME/.ssh"
+
+# Set correct permissions for the .ssh directory
+chmod 700 "$HOME/.ssh"
+
+# Generate the RSA key pair
+ssh-keygen -t rsa -b 4096 -f "$KEY_FILE" -N "$PASSPHRASE"
+
+echo "SSH key pair generated at $KEY_FILE"
