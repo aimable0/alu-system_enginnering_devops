@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 Host *
-    PreferredAuthentication publickey
+    PreferredAuthentications publickey
     PasswordAuthentication no
