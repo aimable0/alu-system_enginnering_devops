@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-Host *
+Host ubuntu@6355-web-01
     PreferredAuthentications publickey
     PasswordAuthentication no
