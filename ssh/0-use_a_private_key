@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
+# the command below contains the word ssh for protocol -i for key and remote@host
 ssh -i ~/.ssh/school ubuntu@6355-web-01

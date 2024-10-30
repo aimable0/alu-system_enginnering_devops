@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
+# generating a ssh key with bites defined (-b) with a filename and name of passphrase (-N)
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/school -N "betty"
