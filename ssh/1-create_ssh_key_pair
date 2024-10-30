@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 # generating a ssh key with bites defined (-b) with a filename and name of passphrase (-N)
+sudo apt update && sudo apt install openssh-client
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/school -N "betty"
