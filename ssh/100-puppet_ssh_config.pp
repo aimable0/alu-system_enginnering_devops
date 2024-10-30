@@ -1,18 +1,19 @@
+#this file contains a puppet script that configs an ssh file.
 file_line { 'Turn off passwd auth':
-  path  => 'school',  # Modify this path as needed
+  path  => '/etc/ssh/ssh_config',
   line  => 'PasswordAuthentication no',
   match => '^PasswordAuthentication',
 }
 
 file_line { 'Declare identity file':
-  path  => '/home/vagrant/.ssh/config',  # Modify this path as needed
+  path  => '/home/vagrant/.ssh/config',
   line  => 'IdentityFile ~/.ssh/school',
   match => '^IdentityFile',
 }
 
 file { '/home/vagrant/.ssh/config':
   ensure => file,
-  owner  => 'ubuntu',  # Modify the owner as per your environment
-  group  => 'ubuntu',  # Modify the group as per your environment
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
   mode   => '0600',
 }
