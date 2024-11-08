@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# This script taked params from commandline and use them to copy file to remote server
 PATH_TO_FILE=$1
 IP=$2
 USERNAME=$3
