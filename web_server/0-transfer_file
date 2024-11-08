@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This script taked params from commandline and use them to copy file to remote server
 
-if [[ $# -eq 5 ]]; then
+if [ $# -eq 4 ]; then
     PATH_TO_FILE=$1
     IP=$2
     USERNAME=$3
