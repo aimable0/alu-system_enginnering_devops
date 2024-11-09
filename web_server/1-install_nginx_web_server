@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#This script can automat an installation of nginx on a web server
+
+sudo apt install nginx -y
+sudo service nginx start
