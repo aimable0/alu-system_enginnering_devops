@@ -2,5 +2,5 @@
 #This script can automat an installation of nginx on a web server
 
 sudo apt install nginx -y
-sudo echo "<h1>Holberton School</h1>" > /var/www/html/index.html
+echo "Holberton School" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
 sudo service nginx start
