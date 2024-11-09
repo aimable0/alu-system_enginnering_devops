@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
-# This script automates some stuff
+#This script automates some stuff
 
 # Update package list and install HAProxy
 sudo apt update
 sudo apt install -y haproxy
 
-# Configure HAProxy for round-robin load balancing between web-01 and web-02
-# Replace YOUR_STUDENT_ID with your actual ID to ensure hostnames match requirements
-STUDENT_ID="YOUR_STUDENT_ID"
+# Define hostnames for web-01 and web-02
+STUDENT_ID="204141123"
+WEB_01_HOSTNAME="${STUDENT_ID}-web-01"
+WEB_02_HOSTNAME="${STUDENT_ID}-web-02"
 
-# Define HAProxy configuration
+# Define the IP addresses of the backend servers (replace these with actual IP addresses)
+WEB_01_IP="44.222.227.193"
+WEB_02_IP="34.228.16.92"
+
+# Configure HAProxy with round-robin load balancing
 sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOF
 global
     log /dev/log    local0
@@ -20,6 +25,7 @@ global
     user haproxy
     group haproxy
     daemon
+    maxconn 2000
 
 defaults
     log     global
@@ -29,13 +35,6 @@ defaults
     timeout connect 5000
     timeout client  50000
     timeout server  50000
-    errorfile 400 /etc/haproxy/errors/400.http
-    errorfile 403 /etc/haproxy/errors/403.http
-    errorfile 408 /etc/haproxy/errors/408.http
-    errorfile 500 /etc/haproxy/errors/500.http
-    errorfile 502 /etc/haproxy/errors/502.http
-    errorfile 503 /etc/haproxy/errors/503.http
-    errorfile 504 /etc/haproxy/errors/504.http
 
 frontend http_front
     bind *:80
@@ -43,18 +42,15 @@ frontend http_front
 
 backend http_back
     balance roundrobin
-    server ${STUDENT_ID}-web-01 [web-01_IP]:80 check
-    server ${STUDENT_ID}-web-02 [web-02_IP]:80 check
+    option httpchk
+    server ${WEB_01_HOSTNAME} ${WEB_01_IP}:80 check
+    server ${WEB_02_HOSTNAME} ${WEB_02_IP}:80 check
 EOF
 
-# Replace [web-01_IP] and [web-02_IP] with actual IP addresses of web-01 and web-02
-sudo sed -i "s/\[web-01_IP\]/WEB_01_IP_ADDRESS/g" /etc/haproxy/haproxy.cfg
-sudo sed -i "s/\[web-02_IP\]/WEB_02_IP_ADDRESS/g" /etc/haproxy/haproxy.cfg
-
-# Restart HAProxy to apply the new configuration
+# Restart HAProxy to apply changes
 sudo systemctl restart haproxy
-
-# Enable HAProxy service to start on boot
+# Enable HAProxy to start on boot
 sudo systemctl enable haproxy
 
-echo "HAProxy is configured for load balancing with round-robin between web-01 and web-02"
+# Confirm setup is complete
+echo "HAProxy is configured for load balancing with round-robin between ${WEB_01_HOSTNAME} and ${WEB_02_HOSTNAME}"
