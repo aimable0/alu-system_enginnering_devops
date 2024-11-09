@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# Update package list and install Nginx
+sudo apt update
+sudo apt install -y nginx
+
+# Create a creative custom 404 page
+cat <<EOF | sudo tee /var/www/html/404.html > /dev/null
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            font-size: 3em;
+            color: #e63946;
+        }
+        p {
+            font-size: 1.5em;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.2s;
+        }
+        a:hover {
+            border-bottom: 2px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Oops! This isn't the page you're looking for.</h1>
+</body>
+</html>
+EOF
+
+# Configure Nginx to use this custom 404 page
+sudo sed -i '/server {/a \    error_page 404 /404.html;\n    location = /404.html {\n        internal;\n    }' /etc/nginx/sites-available/default
+
+# Test and reload Nginx
+if sudo nginx -t; then
+    sudo systemctl reload nginx
+    echo "Creative 404 page configured successfully."
+else
+    echo "Nginx configuration test failed. Please check the configuration."
+    exit 1
+fi

@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+
+# Update package list and install Nginx
+sudo apt update
+sudo apt install -y nginx
+
+# Define the URL to redirect to
+REDIRECT_URL="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+
+# Configure Nginx to add a 301 redirection from /redirect_me
+# We use sed to insert the redirection configuration in the default server block
+sudo sed -i '/server {/a \    location = /redirect_me {\n        return 301 '"$REDIRECT_URL"';\n    }' /etc/nginx/sites-available/default
+
+# Test the Nginx configuration and reload to apply changes
+if sudo nginx -t; then
+    sudo systemctl reload nginx
+    echo "Configuration complete. /redirect_me now redirects to $REDIRECT_URL with a 301 status."
+else
+    echo "Nginx configuration test failed. Please check the configuration."
+    exit 1
+fi
