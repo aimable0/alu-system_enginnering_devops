@@ -5,10 +5,7 @@
 sudo apt update -y
 sudo apt install nginx -y
 
-#change the page to holberton
-echo "<h1>Holberton School</h1>" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
-
 #make redirection to another page
 sudo sed -i '/^\tserver_name.*;$/a \\n\        location /redirect_me {\n            return 301 http://www.gty.org;\n        }' /etc/nginx/sites-available/default
 
-sudo service nginx reload
+sudo service nginx restart
