@@ -6,8 +6,8 @@ apt-get update -y
 apt-get install -y nginx
 
 # Ensure Nginx is enabled and running
-systemctl enable nginx
-systemctl start nginx
+service nginx enable
+service nginx start
 
 # Configure Nginx to listen on port 80
 NGINX_CONF="/etc/nginx/sites-enabled/default"
