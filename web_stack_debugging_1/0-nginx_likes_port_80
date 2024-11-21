@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sudo sed -i '/^\tlisten/a \\tlisten 80;' /etc/nginx/sites-available/default
