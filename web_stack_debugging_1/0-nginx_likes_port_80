@@ -1,3 +1,31 @@
-#!/usr/bin/env bash
-# The script below adds a listen directive that makes it possible to listen to port 80
-service nginx start
+#!/bin/bash
+# Script to configure Nginx to listen on port 80
+
+# Update and install Nginx
+apt-get update -y
+apt-get install -y nginx
+
+# Ensure Nginx is enabled and running
+systemctl enable nginx
+systemctl start nginx
+
+# Configure Nginx to listen on port 80
+NGINX_CONF="/etc/nginx/sites-enabled/default"
+if grep -q "listen 80;" $NGINX_CONF; then
+    echo "Port 80 already configured."
+else
+    sed -i 's/listen [0-9]*/listen 80/' $NGINX_CONF
+fi
+
+# Allow port 80 through the firewall
+ufw allow 80 || echo "Firewall not active, skipping."
+
+# Test configuration and reload Nginx
+nginx -t && systemctl reload nginx
+
+# Verify Nginx is listening on port 80
+if curl -s 0:80 | grep -q "Welcome to nginx"; then
+    echo "Nginx is successfully running and listening on port 80!"
+else
+    echo "Nginx setup failed."
+fi
