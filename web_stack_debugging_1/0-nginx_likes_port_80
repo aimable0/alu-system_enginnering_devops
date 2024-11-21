@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # The script below adds a listen directive that makes it possible to listen to port 80
 sudo service nginx start
-#sudo sed -i '/^\tlisten/a \\tlisten 80;' /etc/nginx/sites-available/default
+sudo sed -i '/^\tlisten/a \\tlisten 80;' /etc/nginx/sites-available/default
+sudo service nginx reload
