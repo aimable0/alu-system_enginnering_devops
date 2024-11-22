@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 # This script installs Nginx, ensures it listens on port 80, and starts the service
-sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo service nginx start
