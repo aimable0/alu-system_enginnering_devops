@@ -1,19 +1,5 @@
 #!/usr/bin/env bash
 # setting a different user to run web server nginx
 
-# Step 1: Ensure the nginx user exists
-id -u nginx &>/dev/null || useradd -r -s /sbin/nologin nginx
-
-# Step 2: Update Nginx configuration to run as the nginx user
-sed -i 's/^user .*/user nginx;/' /etc/nginx/nginx.conf
-
-# Step 3: Change the default port to 8080
-sed -i 's/listen 80;/listen 8080;/' /etc/nginx/sites-available/default
-
-# Step 4: Set appropriate permissions for the nginx user
-chown -R nginx:nginx /var/log/nginx
-chown -R nginx:nginx /var/lib/nginx
-chown -R nginx:nginx /var/www/html
-
-# Step 5: Restart Nginx to apply changes
-nginx -s reload || service nginx restart
+sed -i 's/80/8080/g' /etc/nginx/sites-available/default
+sudo -u nginx service nginx restart
