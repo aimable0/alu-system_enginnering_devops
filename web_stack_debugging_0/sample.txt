@@ -1,0 +1,11 @@
+love is very great
+I love people including: 
+love is very great
+server {
+	listen 8080 default_server;
+	listen 8080;
+tlisten 8080;
+listen 8080;
+	#new here
+
+}

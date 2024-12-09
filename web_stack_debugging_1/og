@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# The script below adds a listen directive that makes it possible to listen to port 80
+
+service nginx start

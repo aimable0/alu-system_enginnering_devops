@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# This script automates nginx in a new machine and custom a 404 error page
+
+#install nginx on new machine
+sudo apt update -y
+sudo apt install nginx -y
+
+#customise 404 error page
+#create a 404 error page
+echo "<h1>Ceci n'est pas une page</h1>" | sudo tee /var/www/html/404.html > /dev/null
+
+#insert the error_page directive in config file
+sudo sed -i '/^\tserver_name.*;$/a \\n\        error_page 404 /404.html;\n        location = /404.html {\n            internal;\n        }' /etc/nginx/sites-available/default
+sudo service nginx restart
