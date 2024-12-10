@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# this script automates an establishment of a load balancer using roundrobin alg
+
 sudo apt update -y
 sudo apt install haproxy
 sudo service haproxy start
